@@ -1,13 +1,10 @@
-import React from "react";
-import { SafeAreaView, StatusBar, FlatList, View } from "react-native";
+import React, { useContext } from "react";
+import { FlatList, View } from "react-native";
 import { ResturantInfoCard } from "../components/ResturantInfoCard.component";
-import { Searchbar } from "react-native-paper";
+import { ActivityIndicator, Colors } from "react-native-paper";
 import styled from "styled-components/native";
-
-const SearchContainer = styled(View)`
-  padding: ${(props) => props.theme.space[3]};
-  padding-bottom: ${(props) => props.theme.space[1]};
-`;
+import { ResturantsContext } from "../../../services/resturants/resturants.context";
+import { Search } from "../components/search.component";
 
 const ResturantList = styled(FlatList).attrs({
   contentContainerStyle: {
@@ -15,21 +12,37 @@ const ResturantList = styled(FlatList).attrs({
   },
 })``;
 
-export const ResturantsScreen = () => {
-  const [searchQuery, setSearchQuery] = React.useState("");
+const LoadingView = styled(View)`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+`;
 
-  const onChangeSearch = (query) => setSearchQuery(query);
+const ContainerView = styled(View)`
+  flex: 1;
+`;
+
+const Loading = styled(ActivityIndicator)`
+  margin-left: -25px;
+`;
+
+export const ResturantsScreen = () => {
+  const { isLoading, error, resturants } = useContext(ResturantsContext);
   return (
-    <View>
-      <SearchContainer>
-        <Searchbar />
-      </SearchContainer>
+    <ContainerView>
+      {isLoading && (
+        <LoadingView>
+          <Loading size={50} animating={isLoading} color={Colors.blue300} />
+        </LoadingView>
+      )}
+
+      <Search />
       <ResturantList
-        data={[{ name: 1 }, { name: 2 }, { name: 3 }, { name: 4 }]}
-        renderItem={() => <ResturantInfoCard />}
+        data={resturants}
+        renderItem={({ item }) => <ResturantInfoCard resturant={item} />}
         keyExtractor={(item) => item.name}
         contentContainerStyle={{ padding: 16 }}
       />
-    </View>
+    </ContainerView>
   );
 };
