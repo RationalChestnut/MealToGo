@@ -1,5 +1,6 @@
+import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
-import { MapScreen } from "../../../src/features/resturants/screens/map.screen";
+import { MapScreen } from "../../../src/features/map/screens/map.screen";
 import { SettingsScreen } from "../../../src/features/resturants/screens/settings.screen";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Ionicons } from "@expo/vector-icons";
