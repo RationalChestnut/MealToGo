@@ -1,5 +1,4 @@
 import React from "react";
-import { NavigationContainer } from "@react-navigation/native";
 import { MapScreen } from "../../../src/features/map/screens/map.screen";
 import { SettingsScreen } from "../../../src/features/resturants/screens/settings.screen";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
@@ -28,16 +27,14 @@ const Tab = createBottomTabNavigator();
 
 export const AppNavigator = () => {
   return (
-    <NavigationContainer>
-      <Tab.Navigator screenOptions={createScreenOptions}>
-        <Tab.Screen
-          name="Restaurants"
-          component={ResturantsNavigator}
-          headerMode={false}
-        />
-        <Tab.Screen name="Map" component={MapScreen} />
-        <Tab.Screen name="Settings" component={SettingsScreen} />
-      </Tab.Navigator>
-    </NavigationContainer>
+    <Tab.Navigator screenOptions={createScreenOptions}>
+      <Tab.Screen
+        name="Restaurants"
+        component={ResturantsNavigator}
+        headerMode={false}
+      />
+      <Tab.Screen name="Map" component={MapScreen} />
+      <Tab.Screen name="Settings" component={SettingsScreen} />
+    </Tab.Navigator>
   );
 };

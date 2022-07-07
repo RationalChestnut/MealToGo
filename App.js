@@ -1,4 +1,5 @@
 import React from "react";
+
 import ExpoStatusBar from "expo-status-bar/build/ExpoStatusBar";
 import { ThemeProvider } from "styled-components/native";
 import { theme } from "./src/infrastructure/theme";
@@ -13,6 +14,7 @@ import { SafeAreaView, StatusBar } from "react-native";
 import styled from "styled-components/native";
 import { LocationContextProvider } from "./src/services/location/location.context";
 import { Navigation } from "./src/infrastructure/navigation/index";
+import { AuthenticationContextProvider } from "./src/services/authentication/authentication.context";
 
 const Protector = styled(SafeAreaView)`
   flex: 1;
@@ -31,18 +33,21 @@ export default function App() {
   if (!oswaldLoaded || !latoLoaded) {
     return null;
   }
+
   return (
     <>
       <ThemeProvider theme={theme}>
-        <FavoritesContextProvider>
-          <LocationContextProvider>
-            <Protector>
-              <ResturantsContextProvider>
-                <Navigation />
-              </ResturantsContextProvider>
-            </Protector>
-          </LocationContextProvider>
-        </FavoritesContextProvider>
+        <AuthenticationContextProvider>
+          <FavoritesContextProvider>
+            <LocationContextProvider>
+              <Protector>
+                <ResturantsContextProvider>
+                  <Navigation />
+                </ResturantsContextProvider>
+              </Protector>
+            </LocationContextProvider>
+          </FavoritesContextProvider>
+        </AuthenticationContextProvider>
       </ThemeProvider>
       <ExpoStatusBar style="auto" />
     </>
